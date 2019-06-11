@@ -1,8 +1,3 @@
-extern crate rust_nlp100;
-
-use rust_nlp100::tokenizer::Words;
-use rust_nlp100::tokenizer::Tokenizer;
-
 struct NGram<T: Iterator> {
     n: usize,
     tokn: T,
@@ -47,7 +42,9 @@ where <T as Iterator>::Item: Clone {
 
 
 fn main() {
-    // inputs
+    extern crate rust_nlp100;
+    use rust_nlp100::tokenizer::Words;
+
     let s = "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.";
 
     println!("=== bi-gram chars ===");
