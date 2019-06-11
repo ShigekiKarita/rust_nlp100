@@ -2,7 +2,7 @@ extern crate rust_nlp100;
 
 use std::collections::HashSet;
 use std::collections::HashMap;
-use rust_nlp100::tokenizer::Tokenize;
+use rust_nlp100::tokenizer::Words;
 
 fn main() {
     // inputs
@@ -12,7 +12,7 @@ fn main() {
         .collect::<HashSet<_>>();
 
     let mut word2id = HashMap::new();
-    for (i, w) in s.tokenize().enumerate() {
+    for (i, w) in s.words().enumerate() {
         let n = if mask.contains(&i) { 1 } else { 2 };
         let word = w.chars().take(n).collect::<String>();
         word2id.insert(word, i);

@@ -1,9 +1,9 @@
-pub trait Tokenize {
-    fn tokenize(&self) -> Tokenizer;
+pub trait Words {
+    fn words(&self) -> Tokenizer;
 }
 
-impl Tokenize for str {
-    fn tokenize(&self) -> Tokenizer {
+impl Words for str {
+    fn words(&self) -> Tokenizer {
         Tokenizer { siter: self.split_whitespace() }
     }
 }
@@ -31,9 +31,9 @@ fn test_trim_end() {
 }
 
 #[test]
-fn test_tokenize() {
+fn test_words() {
     let s = "This is, well, tokenizer.";
-    let mut t = s.tokenize();
+    let mut t = s.words();
     assert_eq!(Some("This"), t.next());
     assert_eq!(Some("is"), t.next());
     assert_eq!(Some("well"), t.next());
