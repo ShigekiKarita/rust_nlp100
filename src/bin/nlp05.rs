@@ -4,6 +4,7 @@ use std::collections::HashSet;
 use std::collections::HashMap;
 use rust_nlp100::tokenizer::Tokenize;
 
+
 fn main() {
     // inputs
     let s = "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.";
