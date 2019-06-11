@@ -1,0 +1,27 @@
+[package]
+name = "rust_nlp100"
+version = "0.1.0"
+authors = ["karita <shigekikarita@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+
+[[bin]]
+name = "nlp00"
+path = "src/bin/nlp00.rs"
+
+[[bin]]
+name = "nlp01"
+path = "src/bin/nlp01.rs"
+
+[[bin]]
+name = "nlp02"
+path = "src/bin/nlp02.rs"
+
+[[bin]]
+name = "nlp03"
+path = "src/bin/nlp03.rs"
+
+[[bin]]
+name = "nlp04"
+path = "src/bin/nlp04.rs"
