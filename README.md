@@ -9,3 +9,14 @@ rustc: 1.35.0 (3c235d560 2019-05-20)
 lisence: BSL-1.0
 
 author: shigeki karita
+
+
+## how to test
+
+```
+$ cargo test --lib
+$ cargo run --bin nlp00
+$ cargo run --bin nlp01
+$ cargo run --bin nlp02
+$ ...
+```
