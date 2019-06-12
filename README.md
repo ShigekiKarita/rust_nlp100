@@ -20,3 +20,5 @@ $ cargo run --bin nlp01
 $ cargo run --bin nlp02
 $ ...
 ```
+
+see [./Cargo.toml](./Cargo.toml) for the bin name.
