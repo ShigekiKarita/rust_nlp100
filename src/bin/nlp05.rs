@@ -3,15 +3,15 @@ fn main() {
     use rust_nlp100::tokenizer::Words;
     use rust_nlp100::ngram::NGram;
 
-    let s = "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.";
+    let s = "I am an NLPer";
 
     println!("=== bi-gram chars ===");
-    for ng in NGram::from(2, s.chars()) {
+    for ng in s.chars().ngram(2) {
         println!("{:?}", ng);
     }
 
     println!("=== bi-gram words ===");
-    for ng in NGram::from(2, s.words()) {
+    for ng in s.words().ngram(2) {
         println!("{:?}", ng);
     }
 

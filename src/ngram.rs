@@ -1,6 +1,6 @@
 use std::collections::VecDeque;
 
-pub struct NGram<T: Iterator> {
+pub struct NGramIter<T: Iterator> {
     n: usize,
     tokn: T,
     prev: VecDeque<T::Item>,
@@ -8,33 +8,30 @@ pub struct NGram<T: Iterator> {
 }
 
 
-impl<T: Iterator> NGram<T>
+impl<T: Iterator> NGramIter<T>
 where <T as Iterator>::Item: Clone {
-    pub fn from(n: usize, s: T) -> NGram<T> {
-        NGram { n: n, tokn: s, prev: VecDeque::new(), init: false }
+    pub fn from(s: T, n: usize) -> NGramIter<T> {
+        NGramIter { n: n, tokn: s, prev: VecDeque::new(), init: false }
     }
 
     pub fn incomplete_next(&mut self) -> Option<Vec<T::Item>> {
-        match self.tokn.next() {
-            None => None,
-            Some(s) => {
-                self.prev.push_back(s);
-                while self.prev.len() > self.n {
-                    self.prev.pop_front();
-                }
-                let l = self.prev.len();
-                let s = if l < self.n { 0 } else { l - self.n };
-                let mut v = Vec::with_capacity(self.n);
-                for i in s .. l {
-                    v.push(self.prev[i].clone());
-                }
-                Some(v)
+        self.tokn.next().map(|s| {
+            self.prev.push_back(s);
+            while self.prev.len() > self.n {
+                self.prev.pop_front();
             }
-        }
+            let l = self.prev.len();
+            let s = if l < self.n { 0 } else { l - self.n };
+            let mut v = Vec::with_capacity(self.n);
+            for i in s .. l {
+                v.push(self.prev[i].clone());
+            }
+            v
+        })
     }
 }
 
-impl<T: Iterator> Iterator for NGram<T>
+impl<T: Iterator> Iterator for NGramIter<T>
 where <T as Iterator>::Item: Clone {
     type Item = Vec<T::Item>;
 
@@ -49,11 +46,22 @@ where <T as Iterator>::Item: Clone {
     }
 }
 
+pub trait NGram<T: Iterator>
+where <T as Iterator>::Item: Clone {
+    fn ngram(self, n: usize) -> NGramIter<T>;
+}
+
+impl<T: Iterator> NGram<T> for T
+where <T as Iterator>::Item: Clone {
+    fn ngram(self, n: usize) -> NGramIter<T> {
+        NGramIter::from(self, n)
+    }
+}
 
 #[test]
 fn test_char_bigram() {
     let s  = "abc";
-    let mut ngram = NGram::from(2, s.chars());
+    let mut ngram = s.chars().ngram(2);
     assert_eq!(Some(vec!['a', 'b']), ngram.next());
     assert_eq!(Some(vec!['b', 'c']), ngram.next());
     assert_eq!(None, ngram.next());
@@ -62,7 +70,7 @@ fn test_char_bigram() {
 #[test]
 fn test_char_trigram() {
     let s  = "abcd";
-    let mut ngram = NGram::from(3, s.chars());
+    let mut ngram = s.chars().ngram(3);
     assert_eq!(Some(vec!['a', 'b', 'c']), ngram.next());
     assert_eq!(Some(vec!['b', 'c', 'd']), ngram.next());
     assert_eq!(None, ngram.next());
@@ -72,7 +80,7 @@ fn test_char_trigram() {
 fn test_word_bigram() {
     use super::tokenizer::Words;
     let s  = "abc, d e.";
-    let mut ngram = NGram::from(2, s.words());
+    let mut ngram = s.words().ngram(2);
     assert_eq!(Some(vec!["abc", "d"]), ngram.next());
     assert_eq!(Some(vec!["d", "e"]), ngram.next());
     assert_eq!(None, ngram.next());
@@ -82,7 +90,7 @@ fn test_word_bigram() {
 fn test_word_tiigram() {
     use super::tokenizer::Words;
     let s  = "abc, d e abc.";
-    let mut ngram = NGram::from(3, s.words());
+    let mut ngram = s.words().ngram(3);
     assert_eq!(Some(vec!["abc", "d", "e"]), ngram.next());
     assert_eq!(Some(vec!["d", "e", "abc"]), ngram.next());
     assert_eq!(None, ngram.next());
