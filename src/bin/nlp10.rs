@@ -3,7 +3,7 @@
 
 fn main() -> std::io::Result<()> {
     let args: Vec<_> = std::env::args().collect();
-    let usage = format!("usage: {} <filename>", args[0]);
+    let usage = format!("usage: {} <filename1> <filename2> ...", args[0]);
     if args.len() == 1 || args[1] == "--help" || args[1] == "-h" {
         println!("{}", usage);
     } else {
