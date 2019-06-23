@@ -53,3 +53,7 @@ path = "src/bin/nlp10.rs"
 [[bin]]
 name = "nlp11"
 path = "src/bin/nlp11.rs"
+
+[[bin]]
+name = "nlp12"
+path = "src/bin/nlp12.rs"
