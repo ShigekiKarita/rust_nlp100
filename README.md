@@ -1,5 +1,7 @@
 # Rust NLP100
 
+[![CircleCI](https://circleci.com/gh/ShigekiKarita/rust_nlp100.svg?style=svg)](https://circleci.com/gh/ShigekiKarita/rust_nlp100)
+
 solving natural language processing 100 problems in Rust
 
 http://www.cl.ecei.tohoku.ac.jp/nlp100/
