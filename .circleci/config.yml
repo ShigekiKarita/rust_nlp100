@@ -1,16 +1,38 @@
 version: 2
 jobs:
-  build:
+  test:
+    jobs:
+      - test-nightly
+      - test-stable
+
+jobs:
+  test-nightly:
     docker:
-      - image: rustlang/rust:nightly
+      - image: circleci/rust:latest
 
     steps:
       - checkout
-
+      - run:
+          name: version
+          command: rustc --version
       - run:
           name: test
           command: cargo test
+      - run:
+          name: bin
+          command: find ./test/*.sh -exec {} \;
 
+  test-nightly:
+    docker:
+      - image: circleci/rust:1.35
+    steps:
+      - checkout
+      - run:
+          name: version
+          command: rustc --version
+      - run:
+          name: test
+          command: cargo test
       - run:
           name: bin
           command: find ./test/*.sh -exec {} \;
