@@ -3,11 +3,11 @@ workflows:
   version: 2
   test:
     jobs:
-      - test-nightly
       - test-stable
+      - test-nightly
 
 jobs:
-  test-nightly:
+  test-stable:
     docker:
       - image: circleci/rust:latest
 
@@ -23,9 +23,9 @@ jobs:
           name: bin
           command: find ./test/*.sh -exec {} \;
 
-  test-stable:
+  test-nightly:
     docker:
-      - image: circleci/rust:1.35
+      - image: rustlang/rust:nightly
     steps:
       - checkout
       - run:
