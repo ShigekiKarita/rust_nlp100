@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: rustlang/rust:nightly
+
+    steps:
+      - checkout
+
+      - run:
+          name: test
+          command: cargo test
+
+      - run:
+          name: bin
+          command: find ./test/*.sh -exec {} \;
+
