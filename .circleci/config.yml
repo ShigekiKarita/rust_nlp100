@@ -17,17 +17,13 @@ jobs:
           name: version
           command: rustc --version
       - run:
-          name: test
-          command: cargo test
-      - run:
           name: bin
           command: find ./test/*.sh -exec {} \;
       - run:
           name: coverage
           command: |
-            cargo install cargo-tarpaulin
-            cargo tarpaulin --out Xml
-            bash <(curl -s https://codecov.io/bash) -f ./cobertura.xml
+            docker run --security-opt seccomp=unconfined -v "$PWD:/volume" xd009642/tarpaulin -c 'cargo tarpaulin --exclude-files "src/bin/*.rs" --out Xml'
+            bash <(curl -s https://codecov.io/bash)
 
   test-nightly:
     docker:
