@@ -40,7 +40,6 @@ jobs:
     machine: true
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           name: coverage
           command: docker run --security-opt seccomp=unconfined -v "$PWD:/volume" xd009642/tarpaulin -c 'cargo tarpaulin --exclude-files "src/bin/*.rs" --out Xml'
