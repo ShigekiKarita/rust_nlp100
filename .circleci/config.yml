@@ -42,7 +42,7 @@ jobs:
       - checkout
       - run:
           name: coverage
-          command: docker run --security-opt seccomp=unconfined -v "$PWD:/volume" xd009642/tarpaulin -c 'cargo tarpaulin --exclude-files "src/bin/*.rs" --out Xml'
+          command: docker run --security-opt seccomp=unconfined -v "$PWD:/volume" xd009642/tarpaulin sh -c 'cargo tarpaulin --exclude-files "src/bin/*.rs" --out Xml'
       - run:
           name: codecov
           command: bash <(curl -s https://codecov.io/bash)
